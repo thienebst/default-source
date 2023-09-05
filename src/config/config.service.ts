@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { join } from "path";
 
 @Injectable()
 export class ConfigAppService {
@@ -9,14 +10,13 @@ export class ConfigAppService {
         return {
             type: 'postgres',
 
-            host: this.configService.get('db.POSTGRES_HOST'),
-            port: parseInt(this.configService.get('db.POSTGRES_PORT')),
-            username: this.configService.get('db.POSTGRES_USER'),
-            password: this.configService.get('db.POSTGRES_PASSWORD'),
-            database: this.configService.get('db.POSTGRES_DATABASE'),
-
-            entities: ['**/*.entity{.ts,.js}'],
-
+            host: this.configService.get('db.HOST'),
+            port: parseInt(this.configService.get('db.PORT')),
+            username: this.configService.get('db.USER'),
+            password: this.configService.get('db.PASSWORD'),
+            database: this.configService.get('db.DATABASE'),
+            autoLoadEntities: true,
+            entities: [join(__dirname, '**', '*.entity.{ts,js}')],
             migrationsTableName: 'migration',
 
             migrations: ['src/migration/*.ts'],
