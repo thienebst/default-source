@@ -1,31 +1,32 @@
-import { DeepPartial, Repository } from "typeorm";
-import { BaseEntity } from "./base-entity";
+import { DeepPartial, Repository } from 'typeorm';
+import { BaseEntity } from './base-entity';
 
-export class BaseCrudService<Entity extends BaseEntity, CreateDto extends DeepPartial<Entity>, UpdateDto extends DeepPartial<Entity>> {
+export class BaseCrudService<
+  Entity extends BaseEntity,
+  CreateDto extends DeepPartial<Entity>,
+  UpdateDto extends DeepPartial<Entity>,
+> {
+  constructor(public repository: Repository<Entity>) {}
 
-    constructor(
-        public repository: Repository<Entity>,
-    ) { }
+  create(createUserDto: CreateDto) {
+    return this.repository.save({
+      ...createUserDto,
+    });
+  }
 
-    create(createUserDto: CreateDto) { 
-        return this.repository.save({
-            ...createUserDto,
-        });
-    }
+  findAll() {
+    return this.repository.find();
+  }
 
-    findAll() {
-        return this.repository.find()
-    }
+  findOne(params) {
+    return this.repository.findOneBy(params);
+  }
 
-    findOne(id: any) {
-        return this.repository.findOneBy({id: id});
-    }
+  update(id: number, updateUserDto: UpdateDto) {
+    return this.repository.save({ id, ...updateUserDto });
+  }
 
-    update(id: number, updateUserDto: UpdateDto) {
-        return this.repository.save({id, ...updateUserDto});
-    }
-
-    remove(id: number) {
-        return this.repository.delete(id)
-    }
+  remove(id: number) {
+    return this.repository.delete(id);
+  }
 }

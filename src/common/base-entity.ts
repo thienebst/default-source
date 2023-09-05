@@ -1,17 +1,22 @@
-import { Column, Generated, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Generated,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export class BaseEntity {
-    @PrimaryGeneratedColumn()
-    public id: number;
-    // @Column()
-    // createdBy: string;
+  @PrimaryGeneratedColumn()
+  public id: number;
+  // @Column()
+  // createdBy: string;
 
-    // @Column()
-    // updatedBy: string;
+  // @Column()
+  // updatedBy: string;
 
-    // @Column()
-    // createdOn: Date;
+  // @Column()
+  // createdOn: Date;
 
-    // @Column()
-    // updatedOn: Date;
+  // @Column()
+  // updatedOn: Date;
 }
