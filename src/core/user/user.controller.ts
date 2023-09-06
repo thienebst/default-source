@@ -11,9 +11,9 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { Public } from 'src/decorator/public-auth.decorator';
-
+import { UpdateUserDto } from './dto/update-user.dto'; 
+import { ApiBearerAuth } from "@nestjs/swagger";
+@ApiBearerAuth('access-token')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

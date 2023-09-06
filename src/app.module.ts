@@ -9,7 +9,7 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [ConfigAppModule, PostgresModule, CoreModule, AuthModule],
+  imports: [ConfigAppModule, PostgresModule, AuthModule, CoreModule],
   controllers: [AppController],
   providers: [AppService],
 })
