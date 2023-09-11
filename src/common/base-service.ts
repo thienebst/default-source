@@ -1,6 +1,13 @@
-import { DeepPartial, Repository } from 'typeorm';
+import { HttpException, HttpStatus } from '@nestjs/common';
+import { Catch } from '@nestjs/common/decorators';
+import {
+  DeepPartial,
+  EntityNotFoundError,
+  QueryFailedError,
+  Repository,
+} from 'typeorm';
 import { BaseEntity } from './base-entity';
-
+@Catch(QueryFailedError, EntityNotFoundError)
 export class BaseCrudService<
   Entity extends BaseEntity,
   CreateDto extends DeepPartial<Entity>,
@@ -8,25 +15,25 @@ export class BaseCrudService<
 > {
   constructor(public repository: Repository<Entity>) {}
 
-  create(createUserDto: CreateDto) {
+  async create(createUserDto: CreateDto) {
     return this.repository.save({
       ...createUserDto,
     });
   }
 
-  findAll() {
+  async findAll() {
     return this.repository.find();
   }
 
-  findOne(params) {
+  async findOne(params) {
     return this.repository.findOneBy(params);
   }
 
-  update(id: number, updateUserDto: UpdateDto) {
+  async update(id: number, updateUserDto: UpdateDto) {
     return this.repository.save({ id, ...updateUserDto });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return this.repository.delete(id);
   }
 }
