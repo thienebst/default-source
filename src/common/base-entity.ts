@@ -1,22 +1,22 @@
 import {
-  Column,
-  Generated,
-  PrimaryColumn,
+  CreateDateColumn,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 export class BaseEntity {
   @PrimaryGeneratedColumn()
   public id: number;
-  // @Column()
-  // createdBy: string;
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  public created_at: Date;
 
-  // @Column()
-  // updatedBy: string;
-
-  // @Column()
-  // createdOn: Date;
-
-  // @Column()
-  // updatedOn: Date;
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  public updated_at: Date;
 }
