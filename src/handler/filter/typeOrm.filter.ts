@@ -14,7 +14,7 @@ export class QueryFailedExceptionFilter implements ExceptionFilter {
     const response = context.getResponse<Response>();
     const request = context.getRequest<Request>();
     const { name, driverError } = exception;
-    let massage = driverError.detail;
+    let massage = name;
 
     if (driverError.code === '23505') {
       massage = driverError.detail;

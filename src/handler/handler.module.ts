@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
-import { HttpExceptionFilter } from './filter/http-exception.filter';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { QueryFailedExceptionFilter } from './filter/typeOrm.filter';
+import { TransformInterceptor } from "./interceptor/transform-response.interceptor";
 
 @Module({
   providers: [
@@ -9,10 +9,10 @@ import { QueryFailedExceptionFilter } from './filter/typeOrm.filter';
       provide: APP_FILTER,
       useClass: QueryFailedExceptionFilter,
     },
-    // {
-    // 	provide: APP_FILTER,
-    // 	useClass: HttpExceptionFilter
-    // },
+    {
+    	provide: APP_INTERCEPTOR,
+    	useClass: TransformInterceptor  
+    },
   ],
 })
 export class HandlerModule {}
