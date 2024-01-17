@@ -25,9 +25,9 @@ export class TransformInterceptor<T>
       message: 'Yêu cầu được thực hiện thành công',
     };
     return next.handle().pipe(
-      map((data) => ({
+      map(({ message, ...data }) => ({
         code: context.switchToHttp().getResponse().statusCode,
-        message: data.message || defaultResponse.message,
+        message: message || defaultResponse.message,
         result: data,
       })),
     );
