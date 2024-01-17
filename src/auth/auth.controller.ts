@@ -8,7 +8,6 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard as AuthGuardPassport } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/decorator/public-auth.decorator';
 import { AuthGuard } from './auth.guard';
@@ -30,9 +29,8 @@ export class AuthController {
 
   @Public()
   @Get('google/callback')
-  @UseGuards(AuthGuardPassport('google'))
-  async googleLoginCallback(@Request() req): Promise<string> {
-    const { idToken, profile } = req.user;
+  async googleLoginCallback(@Request() req): Promise<any> {
+    const { idToken, profile } = req;
 
     // Verify the Google token
     const isTokenValid = await this.authService.verifyGoogleToken(idToken);
@@ -41,7 +39,9 @@ export class AuthController {
       console.log('User profile:', profile);
       return 'Google login successful';
     } else {
-      return 'Google login failed';
+      return {
+        message: 'Google login failed',
+      };
     }
   }
 

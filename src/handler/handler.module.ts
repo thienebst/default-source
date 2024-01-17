@@ -9,10 +9,10 @@ import { TransformInterceptor } from './interceptor/transform-response.intercept
       provide: APP_FILTER,
       useClass: QueryFailedExceptionFilter,
     },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: TransformInterceptor,
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: TransformInterceptor,
+    // },
   ],
 })
 export class HandlerModule {}
