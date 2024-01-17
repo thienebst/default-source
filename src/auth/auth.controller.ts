@@ -1,18 +1,19 @@
 import {
   Body,
   Controller,
-  Post,
   Get,
-  Request,
   HttpCode,
   HttpStatus,
+  Post,
+  Request,
   UseGuards,
 } from '@nestjs/common';
+import { AuthGuard as AuthGuardPassport } from '@nestjs/passport';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/decorator/public-auth.decorator';
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto';
-import { AuthGuard } from './auth.guard';
-import { Public } from 'src/decorator/public-auth.decorator';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth('access-token')
 @ApiTags('auth')
@@ -26,6 +27,24 @@ export class AuthController {
   signIn(@Body() signInDto: LoginDto) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
+
+  @Public()
+  @Get('google/callback')
+  @UseGuards(AuthGuardPassport('google'))
+  async googleLoginCallback(@Request() req): Promise<string> {
+    const { idToken, profile } = req.user;
+
+    // Verify the Google token
+    const isTokenValid = await this.authService.verifyGoogleToken(idToken);
+
+    if (isTokenValid) {
+      console.log('User profile:', profile);
+      return 'Google login successful';
+    } else {
+      return 'Google login failed';
+    }
+  }
+
   @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req) {

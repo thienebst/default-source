@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { QueryFailedExceptionFilter } from './filter/typeOrm.filter';
-import { TransformInterceptor } from "./interceptor/transform-response.interceptor";
+import { TransformInterceptor } from './interceptor/transform-response.interceptor';
 
 @Module({
   providers: [
@@ -10,8 +10,8 @@ import { TransformInterceptor } from "./interceptor/transform-response.intercept
       useClass: QueryFailedExceptionFilter,
     },
     {
-    	provide: APP_INTERCEPTOR,
-    	useClass: TransformInterceptor  
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
     },
   ],
 })
