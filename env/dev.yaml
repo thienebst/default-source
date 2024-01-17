@@ -6,3 +6,6 @@ db:
   USER: admin
   PASSWORD: user123
   DATABASE: my_database
+google:
+  GOOGLE_CLIENT_ID: 981656610023-4jujb1fc7bvqjbulgmc7731g73acm21u.apps.googleusercontent.com
+  GOOGLE_CLIENT_SECRET: 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
